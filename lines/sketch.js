@@ -4,7 +4,6 @@ function setup() {
   createCanvas(1200, 600, SVG);
   noLoop();
   noFill();
-  stroke(2);
 }
 
 function draw() {
