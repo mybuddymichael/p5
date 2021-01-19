@@ -1,7 +1,7 @@
 let nx = 0;
 
 function setup() {
-  createCanvas(1200, 600, SVG);
+  createCanvas(1200, 600);
   noLoop();
   noFill();
 }
