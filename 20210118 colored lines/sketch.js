@@ -3,7 +3,7 @@ let fromColor;
 let toColor;
 
 function setup() {
-  createCanvas(1200, 600);
+  createCanvas(1200, 600, SVG);
   noLoop();
   noFill();
   fromColor = color(255, 199, 0);
