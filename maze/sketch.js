@@ -5,26 +5,32 @@ const step = 10;
 function setup() {
   createCanvas(600, 600, SVG);
   strokeWeight(3);
-  frameRate(300);
+  frameRate();
   background('peachpuff');
 }
 
-let currentX = 1;
-let currentY = 1;
+let currentCol = 0;
+let currentRow = 0;
 
 function draw() {
-  const thisX = currentX * step + margin;
-  const thisY = currentY * step + margin;
-  drawRandomLine(thisX, thisY, step);
-  currentX += 1;
-  print(currentX);
-  if (thisX > width - margin * 2) {
-    currentX = 1;
-    currentY += 1;
+  let thisX = coordForRowOrColumn(currentCol);
+  let thisY = coordForRowOrColumn(currentRow);
+  if (thisX > width - margin - step) {
+    currentCol = 0;
+    currentRow += 1;
+    thisX = coordForRowOrColumn(currentCol);
+    thisY = coordForRowOrColumn(currentRow);
   }
-  if (thisY > height - margin * 2) {
+  drawRandomLine(thisX, thisY, step);
+  currentCol += 1;
+  if (thisY > height - margin - step) {
     noLoop();
   }
+  print(thisX);
+}
+
+function coordForRowOrColumn(column) {
+  return column * step + margin;
 }
 
 function drawRandomLine(x, y, step) {
