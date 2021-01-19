@@ -21,7 +21,7 @@ function draw() {
     for (let i = 0; i <= width; i++) {
       let m = map(noise(nx, i * 0.003), 0, 1, -300, 300);
       vertex(i, height / 2 + m);
-      nx += 0.00001;
+      nx += 0.000008;
     }
     endShape();
   });
