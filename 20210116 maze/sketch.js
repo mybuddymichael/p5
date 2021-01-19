@@ -3,34 +3,19 @@ const margin = 40;
 const step = 10;
 
 function setup() {
+  noLoop();
   createCanvas(600, 600, SVG);
-  strokeWeight(3);
-  frameRate();
   background('peachpuff');
+  strokeWeight(3);
 }
-
-let currentCol = 0;
-let currentRow = 0;
 
 function draw() {
-  let thisX = coordForRowOrColumn(currentCol);
-  let thisY = coordForRowOrColumn(currentRow);
-  if (thisX > width - margin - step) {
-    currentCol = 0;
-    currentRow += 1;
-    thisX = coordForRowOrColumn(currentCol);
-    thisY = coordForRowOrColumn(currentRow);
+  const step = 10;
+  for (let x = margin; x < width - margin; x = x + step) {
+    for (let y = margin; y < height - margin; y = y + step) {
+      drawRandomLine(x, y, step);
+    }
   }
-  drawRandomLine(thisX, thisY, step);
-  currentCol += 1;
-  if (thisY > height - margin - step) {
-    noLoop();
-  }
-  print(thisX);
-}
-
-function coordForRowOrColumn(column) {
-  return column * step + margin;
 }
 
 function drawRandomLine(x, y, step) {
