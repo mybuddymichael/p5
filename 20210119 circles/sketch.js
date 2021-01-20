@@ -2,8 +2,8 @@ const containerRadius = 300;
 const maxCircleRadius = 8;
 const minCircleRadius = 1;
 const circleMargin = 3;
-const maxTries = 300;
-const totalCircles = 2500;
+const totalCircles = 2000;
+const maxTries = 100;
 
 function setup() {
   createCanvas(800, 800);
@@ -11,9 +11,7 @@ function setup() {
 }
 
 function draw() {
-  const middleX = width / 2;
-  const middleY = height / 2;
-  const containerCircle = createCircle(middleX, middleY, containerRadius);
+  const containerCircle = createCircle(width / 2, height / 2, containerRadius);
   const circles = createCircles(totalCircles, containerCircle);
   stroke(0);
   circles.map((c) => {
@@ -23,8 +21,11 @@ function draw() {
   });
 }
 
-function createCircle(x, y, radius) {
-  return { x: x, y: y, radius: radius };
+function createCircles(n, containerCircle, circles = []) {
+  if (n <= 0) return circles;
+  let circle = createSafeCircle(containerCircle, circles, maxTries);
+  circles = [circle, ...circles];
+  return createCircles(n - 1, containerCircle, circles);
 }
 
 function createSafeCircle(containerCircle, circles, maxTries) {
@@ -45,11 +46,8 @@ function createSafeCircle(containerCircle, circles, maxTries) {
   }
 }
 
-function createCircles(n, containerCircle, circles = []) {
-  if (n <= 0) return circles;
-  let circle = createSafeCircle(containerCircle, circles, maxTries);
-  circles = [circle, ...circles];
-  return createCircles(n - 1, containerCircle, circles);
+function createCircle(x, y, radius) {
+  return { x: x, y: y, radius: radius };
 }
 
 function isOutsideContainer(
@@ -61,16 +59,6 @@ function isOutsideContainer(
   return includingEdge > containerRadius;
 }
 
-function overlaps({ x, y, radius }, { x: x2, y: y2, radius: radius2 }) {
-  const distance = dist(x, y, x2, y2);
-  const actualDistance = distance - radius - radius2;
-  if (actualDistance < circleMargin) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 function anyOverlap(circle, circles) {
   return circles.some((c) => {
     if (!circle || !c) {
@@ -79,4 +67,14 @@ function anyOverlap(circle, circles) {
       return overlaps(circle, c);
     }
   });
+}
+
+function overlaps({ x, y, radius }, { x: x2, y: y2, radius: radius2 }) {
+  const distance = dist(x, y, x2, y2);
+  const actualDistance = distance - radius - radius2;
+  if (actualDistance < circleMargin) {
+    return true;
+  } else {
+    return false;
+  }
 }
