@@ -11,7 +11,6 @@ function setup() {
 }
 
 function draw() {
-  // Get the middle of the big circle
   const middleX = width / 2;
   const middleY = height / 2;
   const containerCircle = createCircle(middleX, middleY, containerRadius);
