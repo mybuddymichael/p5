@@ -3,11 +3,19 @@ const maxCircleRadius = 8;
 const minCircleRadius = 1;
 const circleMargin = 3;
 const totalCircles = 2000;
-const maxTries = 100;
+const maxTries = 200;
+let fromColor;
+let toColor;
+let minDistanceFromOrigin;
+let maxDistanceFromOrigin;
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(800, 800, SVG);
   noLoop();
+  fromColor = color(255, 199, 0);
+  toColor = color(255, 55, 139);
+  minDistanceFromOrigin = dist(0, 0, width / 2, height / 2) - containerRadius;
+  maxDistanceFromOrigin = dist(0, 0, width / 2, height / 2) + containerRadius;
 }
 
 function draw() {
@@ -15,6 +23,13 @@ function draw() {
   const circles = createCircles(totalCircles, containerCircle);
   stroke(0);
   circles.map((c) => {
+    const colorDistance = norm(
+      dist(c.x, c.y, 0, 0),
+      minDistanceFromOrigin,
+      maxDistanceFromOrigin
+    );
+    noStroke();
+    fill(lerpColor(fromColor, toColor, colorDistance));
     circle(c.x, c.y, c.radius * 2);
   });
 }
