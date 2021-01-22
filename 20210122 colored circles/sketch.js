@@ -15,16 +15,16 @@ function draw() {
   const circles = createCircles(totalCircles, containerCircle);
   stroke(0);
   circles.map((c) => {
-    if (c) {
-      circle(c.x, c.y, c.radius * 2);
-    }
+    circle(c.x, c.y, c.radius * 2);
   });
 }
 
 function createCircles(n, containerCircle, circles = []) {
   if (n <= 0) return circles;
   let circle = createSafeCircle(containerCircle, circles, maxTries);
-  circles = [circle, ...circles];
+  if (circle) {
+    circles = [circle, ...circles];
+  }
   return createCircles(n - 1, containerCircle, circles);
 }
 
