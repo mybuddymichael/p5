@@ -21,15 +21,14 @@ function setup() {
 function draw() {
   const containerCircle = createCircle(width / 2, height / 2, containerRadius);
   const circles = createCircles(totalCircles, containerCircle);
-  stroke(0);
   circles.map((c) => {
     const colorDistance = norm(
       dist(c.x, c.y, 0, 0),
       minDistanceFromOrigin,
       maxDistanceFromOrigin
     );
-    noStroke();
-    fill(lerpColor(fromColor, toColor, colorDistance));
+    // noStroke();
+    stroke(lerpColor(fromColor, toColor, colorDistance));
     circle(c.x, c.y, c.radius * 2);
   });
 }
