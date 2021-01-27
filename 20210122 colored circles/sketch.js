@@ -75,11 +75,7 @@ function isOutsideContainer(
 
 function anyOverlap(circle, circles) {
   return circles.some((c) => {
-    if (!circle || !c) {
-      return false;
-    } else {
-      return overlaps(circle, c);
-    }
+    return overlaps(circle, c);
   });
 }
 
